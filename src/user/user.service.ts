@@ -56,7 +56,7 @@ export class UserService {
         };
       }
 
-      if (bcrypt.compare(data.password, findUser.password)) {
+      if (await bcrypt.compare(data.password, findUser.password)) {
         const { access_token } = await tokenSigner(findUser.id, findUser.email);
 
         await this.prisma.user.update({

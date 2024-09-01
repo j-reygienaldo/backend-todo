@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
@@ -21,8 +22,8 @@ export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
   @Get()
-  getAllTodo(@AuthUser() user: User) {
-    return this.todoService.getAllTodo(user);
+  getAllTodo(@Query() title: string, @AuthUser() user: User) {
+    return this.todoService.getAllTodo(title, user);
   }
 
   @Get('/:id')

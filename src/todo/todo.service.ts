@@ -7,11 +7,22 @@ import { AuthUser } from 'src/auth/dto/auth-user.interface';
 export class TodoService {
   constructor(private prisma: PrismaService) {}
 
-  async getAllTodo(user: AuthUser) {
+  async getAllTodo(title: any, user: AuthUser) {
     try {
+      const payload = {
+        userId: Number(user.sub),
+        title: { contains: title.title },
+      };
+
+      if (title.title === '') {
+        delete payload.title;
+      }
+
       const getAllTodo = await this.prisma.todo.findMany({
-        where: { userId: Number(user.sub) },
-        orderBy: { createdAt: 'asc' },
+        where: {
+          ...payload,
+        },
+        orderBy: { isDone: 'asc' },
       });
 
       return {

@@ -6,8 +6,8 @@ export class TodoDto {
 }
 
 export class UpdateTodoDto {
-  @IsNotEmpty()
-  title: string;
+  @IsOptional()
+  title?: string;
 
   @IsOptional()
   isDone?: boolean;
